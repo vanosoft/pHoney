@@ -1,0 +1,106 @@
+# я могу захотеть 32-битный РЕ! #
+property "use32"
+
+# константа. менять её - нельзя. #
+const pi: float = 3.141592
+
+# интерфейс. как в golang #
+interface Point
+{
+    member x: float
+    member def get_x() -> float
+}
+
+# базовый(без наследств) класс "Point" #
+class Base : Point2D
+{
+    # лучше всегда делать поля приватными #
+    private
+    {
+        x: float; y: float
+    }
+    public
+    {
+        def get_x() -> float
+        {
+            return this.x
+        }
+        def get_y() -> float
+        {
+            return this.y
+        }
+        def set_x(x: float)
+        {
+            this.x = x
+            return
+        }
+        def set_y(y: float)
+        {
+            this.y = y
+            return
+        }
+    }
+}
+
+#
+а
+ведь
+можно
+и
+так
+#
+
+def Point2D(x: float, y: float)
+{
+    this.x = x
+    this.y = y
+    return
+}
+
+# чистейший пример наследования и полиморфизма. #
+class Point2D: Point3D
+{
+    private
+    {
+        z: float
+    }
+    public
+    {
+        def get_z() -> float
+        {
+            return this.z
+        }
+        def set_z(z: float)
+        {
+            this.z = z return
+        }
+    }
+}
+
+def Point3D(x: float, y: float, z: float)
+{
+    this.x = x
+    this.y = y
+    this.z = z
+    return
+}
+
+# Эта функция не является членом класса -> не может использовать поля напрямую #
+def get_by_id(this: Point3D, id: int) -> any
+{
+    lst: array = [this.get_x(), this.get_y(), this.get_z()]
+    return lst[id]
+}
+
+def get_x_sth(this: Point) -> float
+{
+    return this.get_x()
+}
+
+coord: Point3D = Point3D(1, 2, 3)
+z: float = get_by_id(coord, 1)
+u: float = get_x_sth(coord)
+# z = 2.0, u = 1 #
+t: int = get_by_id(coord, 1)
+h: int = get_x_sth(coord)
+# t = 2. предупреждение: h - это целое число, а дается ему дробное. будет автотрансформация. #

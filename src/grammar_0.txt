@@ -1,0 +1,116 @@
+Sroot: Sline+ ;
+
+Sline:
+    Tcomment            |
+    Tstr                |
+    Sparam Tsemi?       |
+    Saka Tsemi?         |
+    Sconst Tsemi?       |
+    Sclass Tsemi?       |
+    Smember Tsemi?      |
+    Sdefine Tsemi?      |
+    Sassign Tsemi?      |
+    Sadefine Tsemi?     |
+    Sprivate Tsemi?     |
+    Spublic Tsemi?      |
+    Sfunction Tsemi?    |
+    Sreturn Tsemi?      |
+    Scall Tsemi?        |
+    Sfuncpreinit Tsemi? |
+    Sinterface Tsemi?   |
+    Sfor Tsemi?         |
+    Sforby Tsemi?       |
+    Swhile Tsemi?       |
+    Swhiledo Tsemi?     |
+    Sdowhile Tsemi?     |
+    Sforeach Tsemi?     ;
+Sfor: "for" Tname "from" Sexpression "to" Sexpression Sblock ;
+Sforby: "for" Tname "from" Sexpression "to" Sexpression "by" Sexpression Sblock ;
+Swhile: "while" Sexpression Sblock ;
+Swhiledo: "while" Sexpression "do" Sblock ;
+Sdowhile: "do" Sblock "while" Sexpression ;
+Sforeach: "for" Tname "in" Sexpression Sblock ;
+Sparam: "property" Tstr ;
+Saka: "aka" Tname ;
+Sconst: "const" Tname Tcolon Tname Tequal Sexpression ;
+Sblock: Tlparf Sline* Trparf ;
+Srawinit: Tname Tcolon Tname ;
+Sclass: "class" Tname Tcolon Tname Sblock ;
+Sinterface: "interface" Tname Sblock ;
+Sargs:  Srawinit (Tcomma Srawinit)* ;
+Stypesign: Tarrow Tname ;
+Sfuncpreinit: "def" Tname Tlparn Sargs? Trparn Stypesign? ;
+Smember: "member" Tname Tcolon Tname | "member" "def" Tname Tlparn Sargs? Trparn Stypesign? ;
+Sassign: Sname Tequal Sexpression ;
+Sadefine: Sdefine Tequal Sexpression ;
+Sdefine: Srawinit ;
+Sfunction: "def" Tname Tlparn Sargs? Trparn Stypesign? Sblock ;
+Sprivate: "private" Sblock ;
+Spublic: "public" Sblock ;
+Sreturn: "return" Sexpression? ;
+Scall: Sname Tlparn Sarraycontent? Trparn ;
+
+Sexpression: Tminus Sexpression
+| Tplus Sexpression
+| Tlparn Sexpression Trparn
+| Tint | Sfloat | Tstr | Sname | Sarray | Sdict | Scall
+| Sexpression Tvbar Sexpression | Sexpression "or" Sexpression
+| Sexpression Tand Sexpression | Sexpression "and" Sexpression
+| Sexpression (Tequal Tequal) Sexpression
+| Sexpression (Texpl Tequal) Sexpression
+| Sexpression Tflex Sexpression | Sexpression "xor" Sexpression
+| Sexpression Tminus Sexpression
+| Sexpression Tpercent Sexpression
+| Sexpression Tplus Sexpression
+| Sexpression Tslash Sexpression
+| Sexpression (Texpl Tslash) Sexpression
+| Sexpression Tstar Sexpression
+| Sexpression (Tstar Tstar) Sexpression
+| Sexpression (Texpl Tstar) Sexpression
+| Texpl Sexpression | "not" Sexpression
+| Ttilde Sexpression | Sexpression Sindex ;
+
+Sfloat: (Tint Tdot Tint) ;
+Sname: Tname (Tdot Tname)* ;
+Sarraycontent: (Sexpression (Tcomma Sexpression)*) ;
+Sarray: Tlparb Sarraycontent? Trparb ;
+Sdictentry: Tstr Tcolon Sexpression ;
+Sdictcontent: Sdictentry (Tcomma Sdictentry)* ;
+Sdict: Tlparf Sdictcontent? Trparf ;
+Sindex: Tlparb Sexpression Trparb ;
+
+terminals
+
+Tcomment: /\#(.|\n)*?\#/ ;
+Tstr: /('[^\n'\\]*(?:\\.[^\n'\\]*)*'|"[^\n"\\]*(?:\\.[^\n"\\]*)*")/ ;
+Tnewline: '\n' ;
+Tint: /[+-]?(0[Xx][A-Za-z0-9][A-Za-z0-9_]*|\d+|1[01]*[Bb]|0[Bb])/ ;
+Tname: /[A-Za-z_]\w*/ ;
+Tplus: '+' ;
+Tminus: '-' ;
+Tstar: '*' ;
+Tslash: '/' ;
+Tcolon: ':' ;
+Tsemi: ';' ;
+Tand: '&' ;
+Texpl: '!' ;
+Tat: '@' ;
+Tbux: '$' ;
+Tpercent: '%' ;
+Tflex: '^' ;
+Tequal: '=' ;
+Tapos: '`' ;
+Ttilde: '~' ;
+Tbslash: '\\' ;
+Tvbar: '|' ;
+Tdot: '.' ;
+Tcomma: ',' ;
+Tlparn: '(' ;
+Trparn: ')' ;
+Tlparf: '{' ;
+Trparf: '}' ;
+Tlparb: '[' ;
+Trparb: ']' ;
+Tlpara: '<' ;
+Trpara: '>' ;
+Tarrow: '->' ;
