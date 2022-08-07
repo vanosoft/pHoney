@@ -8,7 +8,7 @@ const pi: float = 3.141592
 interface Point
 {
     member x: float
-    member def get_x() -> float
+    member fn get_x() -> float
 }
 
 # базовый(без наследств) класс "Point" #
@@ -21,20 +21,20 @@ class Base : Point2D
     }
     public
     {
-        def get_x() -> float
+        fn get_x() -> float
         {
             return this.x
         }
-        def get_y() -> float
+        fn get_y() -> float
         {
             return this.y
         }
-        def set_x(x: float)
+        fn set_x(x: float)
         {
             this.x = x
             return
         }
-        def set_y(y: float)
+        fn set_y(y: float)
         {
             this.y = y
             return
@@ -50,7 +50,7 @@ class Base : Point2D
 так
 #
 
-def Point2D(x: float, y: float)
+fn Point2D(x: float, y: float)
 {
     this.x = x
     this.y = y
@@ -66,18 +66,18 @@ class Point2D: Point3D
     }
     public
     {
-        def get_z() -> float
+        fn get_z() -> float
         {
             return this.z
         }
-        def set_z(z: float)
+        fn set_z(z: float)
         {
             this.z = z return
         }
     }
 }
 
-def Point3D(x: float, y: float, z: float)
+fn Point3D(x: float, y: float, z: float)
 {
     this.x = x
     this.y = y
@@ -86,13 +86,13 @@ def Point3D(x: float, y: float, z: float)
 }
 
 # Эта функция не является членом класса -> не может использовать поля напрямую #
-def get_by_id(this: Point3D, id: int) -> any
+fn get_by_id(this: Point3D, id: int) -> any
 {
     lst: array = [this.get_x(), this.get_y(), this.get_z()]
     return lst[id]
 }
 
-def get_x_sth(this: Point) -> float
+fn get_x_sth(this: Point) -> float
 {
     return this.get_x()
 }
